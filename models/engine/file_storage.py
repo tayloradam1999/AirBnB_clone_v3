@@ -71,26 +71,26 @@ class FileStorage:
 
     def get(self, cls, id):
         """retrieves one object based on the class and it's ID"""
-        with open(self.__file_path, 'r') as fd:
-            jason = json.load(fd)
-            for objs in jason:
-                if objs.id == id:
-                    return objs
-                else:
-                    return None
-
+        from models import storage
+        data = storage.all(cls).values()
+        for objs in data:
+            if objs.id == id:
+                return objs
+            else:
+                return None
 
     def count(self, cls=None):
         """counts the number of objects in storage"""
+        from models import storage
         if cls:
-            with open(self.__file_path, 'r') as fd:
-            jason = json.load(fd)
-            for objs in jason:
+            count = 0
+            data = storage.all(cls).values()
+            for objs in data:
                 count += 1
             return count
         else:
-            with open(self.__file_path, 'r') as fd:
-            jason = json.load(fd)
-            for objs in jason:
+            count = 0
+            data = storage.all().values()
+            for objs in data:
                 count += 1
             return count

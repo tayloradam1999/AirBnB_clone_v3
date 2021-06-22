@@ -90,13 +90,14 @@ class DBStorage:
         """counts the number of objects in storage"""
         from models import storage
         if cls:
+            count = 0
             data = storage.all(cls).values()
             for objs in data:
                 count += 1
             return count
         else:
-            data = storage.all(self).values()
+            count = 0
+            data = storage.all().values()
             for objs in data:
                 count += 1
             return count
-        
