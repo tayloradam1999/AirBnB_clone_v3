@@ -1,4 +1,4 @@
-#!/usr.bin/python3
+#!/usr/bin/python3
 """ New view for Stat objects that handles default API actions """
 
 from flask import Flask, Blueprint, jsonify, request, url_for
