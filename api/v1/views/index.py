@@ -9,4 +9,4 @@ from api.v1.views import app_views
 def return_jsonify():
     """Returns JSON status=OK"""
 
-    return jsonify({"status":"OK"})
+    return jsonify({"status": "OK"})
