@@ -19,7 +19,7 @@ def tearDown(self):
 @app.errorhandler(404)
 def page_not_found(self):
     """ handles 404 error """
-    return jsonify({"error": "Not found"})
+    return jsonify({"error": "Not found"}), 404
 
 
 if __name__ == "__main__":
