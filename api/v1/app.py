@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+"""Host of our our Flask app"""
+
 
 from flask import Flask, Blueprint, render_template
 from models import storage
