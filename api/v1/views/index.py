@@ -22,7 +22,7 @@ def endpoint():
     from models.state import State
     from models.user import User
     return jsonify({
-        'amenitites': storage.count(Amenity),
+        'amenities': storage.count(Amenity),
         'cities': storage.count(City),
         'places': storage.count(Place),
         'reviews': storage.count(Review),
