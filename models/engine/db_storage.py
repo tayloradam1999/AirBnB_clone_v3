@@ -79,8 +79,8 @@ class DBStorage:
     def get(self, cls, id):
         """retrieves one object based on the class and it's ID"""
         from models import storage
-        data = storage.all(cls).values()
-        for objs in data:
+        data = self.all()
+        for objs in data.values():
             if objs.id == id:
                 return objs
             else:
