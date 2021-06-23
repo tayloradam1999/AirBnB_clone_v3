@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """Host of our Flask app"""
+
 from flask import Flask, Blueprint, render_template
 from models import storage
 from api.v1.views import app_views
@@ -12,6 +13,7 @@ app.register_blueprint(app_views)
 @app.teardown_appcontext
 def tearDown(self):
     """Closes storage"""
+
     storage.close()
 
 if __name__ == "__main__":
