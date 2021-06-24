@@ -12,7 +12,7 @@ import json
 
 @app_views.route("/places/<string:place_id>", methods=['GET'],
                  strict_slashes=False)
-def show_with_id(place_id):
+def show_place_with_id(place_id):
     """ shows specific class with given id """
 
     data = storage.get(Place, place_id)
@@ -21,20 +21,25 @@ def show_with_id(place_id):
     return jsonify(data.to_dict())
 
 
-@app_views.route("/places", methods=['GET'], strict_slashes=False)
-def show_all():
+@app_views.route("/cities/<string:city_id>/places", methods=['GET'],
+                 strict_slashes=False)
+def show_all_places(city_id):
     """ by default, shows all places """
 
-    places = storage.all(Place).values()
+    cities = storage.all(City)
+    if "City." + city_id not in cities:
+        abort(404)
+    places = storage.all(Place)
     new_list = []
-    for place in places:
-        new_list.append(place.to_dict())
+    for place in places.values():
+        if place.city_id == city_id:
+            new_list.append(place.to_dict())
     return jsonify(new_list)
 
 
 @app_views.route("/places/<string:place_id>", methods=['DELETE'],
                  strict_slashes=False)
-def delete_with_id(place_id):
+def delete_place_with_id(place_id):
     """ deletes the class associated with given id """
 
     data = storage.get(Place, place_id)
@@ -47,7 +52,7 @@ def delete_with_id(place_id):
 
 @app_views.route("/cities/<string:city_id>/places", methods=['POST'],
                  strict_slashes=False)
-def post(city_id):
+def post_places(city_id):
     """ creates something new with parameters """
 
     if not request.is_json:
@@ -73,7 +78,7 @@ def post(city_id):
 
 @app_views.route("/places/<place_id>", methods=['PUT', 'GET'],
                  strict_slashes=False)
-def put(place_id):
+def put_places(place_id):
     """ updates class with information """
 
     data = storage.get(Place, place_id)
