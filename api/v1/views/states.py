@@ -54,7 +54,7 @@ def post():
     data = request.get_json()
 
     if "name" not in data:
-        abort(404, description="Missing name")
+        abort(400, description="Missing name")
 
     obj = State(**data)
     storage.new(obj)
