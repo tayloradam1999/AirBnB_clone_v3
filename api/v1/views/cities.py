@@ -1,4 +1,4 @@
-B#!/usr/bin/python3
+#!/usr/bin/python3
 """ New view for City objects that handles default API actions """
 
 from flask import Flask, Blueprint, jsonify, request, url_for, abort
