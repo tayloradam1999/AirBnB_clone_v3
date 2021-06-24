@@ -5,8 +5,8 @@ from flask import Flask, Blueprint, jsonify, request, url_for, abort
 from models.base_model import BaseModel
 from api.v1.views import app_views
 from models import storage
-from models.places import Place
-from models.cities import City
+from models.place import Place
+from models.city import City
 import json
 
 
