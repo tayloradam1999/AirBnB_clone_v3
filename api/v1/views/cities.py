@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+B#!/usr/bin/python3
 """ New view for City objects that handles default API actions """
 
 from flask import Flask, Blueprint, jsonify, request, url_for, abort
@@ -21,7 +21,7 @@ def show_city_with_id(city_id):
     return jsonify(data.to_dict())
 
 
-@app_views.route("/states/<state_id>/cities", methods=['GET'], 
+@app_views.route("/states/<state_id>/cities", methods=['GET'],
                  strict_slashes=False)
 def show_all_cities(state_id):
     """ by default, shows all cities of a state """
@@ -37,7 +37,7 @@ def show_all_cities(state_id):
     return jsonify(new_list)
 
 
-@app_views.route("/states/<string:city_id>", methods=['DELETE'],
+@app_views.route("/cities/<string:city_id>", methods=['DELETE'],
                  strict_slashes=False)
 def delete_city_with_id(city_id):
     """ deletes the class associated with given id """
@@ -50,15 +50,18 @@ def delete_city_with_id(city_id):
     return jsonify({}), 200
 
 
-@app_views.route("/states", methods=['POST'],
+@app_views.route("/states/<state_id>/cities", methods=['POST'],
                  strict_slashes=False)
-def post_city():
+def post_city(state_id):
     """ creates something new with parameters """
 
+    states = storage.all(State)
+    if "State." + state_id not in states:
+        abort(404)
     if not request.is_json:
         abort(400, description="Not a JSON")
     data = request.get_json()
-
+    data["state_id"] = state_id
     if "name" not in data:
         abort(400, description="Missing name")
 
@@ -68,7 +71,7 @@ def post_city():
     return obj.to_dict(), 201
 
 
-@app_views.route("/states/<city_id>", methods=['PUT', 'GET'],
+@app_views.route("/cities/<city_id>", methods=['PUT', 'GET'],
                  strict_slashes=False)
 def put_city(city_id):
     """ updates class with information """
