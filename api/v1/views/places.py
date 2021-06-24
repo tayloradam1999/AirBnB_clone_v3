@@ -91,8 +91,8 @@ def put_places(place_id):
     my_req = request.get_json()
 
     for k, v in my_req.items():
-        if k != "id" and k != "created_at" and k != "updated_at"
-        and k != "user_id" and k != "city_id":
+        if k != "id" and k != "created_at" and k != "updated_at" and\
+           k != "user_id" and k != "city_id":
             setattr(data, k, v)
 
     storage.save()
