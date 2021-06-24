@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-""" New view for Amenity objects that handles default API actions """
+"""New view for Amenity objects that handles all default API actions"""
 
 from flask import Flask, Blueprint, jsonify, request, url_for, abort
 from models.base_model import BaseModel
@@ -12,7 +12,7 @@ import json
 @app_views.route("/amenities/<string:amenity_id>", methods=['GET'],
                  strict_slashes=False)
 def show_amenity_with_id(amenity_id):
-    """ shows specific class with given id """
+    """ shows specific amenity class with given id """
 
     data = storage.get(Amenity, amenity_id)
     if data is None:
@@ -22,7 +22,7 @@ def show_amenity_with_id(amenity_id):
 
 @app_views.route("/amenities", methods=['GET'], strict_slashes=False)
 def show_all_amenities():
-    """ by default, shows all amenities """
+    """by default, shows all amenities"""
 
     amenities = storage.all(Amenity).values()
     new_list = []
@@ -34,7 +34,7 @@ def show_all_amenities():
 @app_views.route("/amenities/<string:amenity_id>", methods=['DELETE'],
                  strict_slashes=False)
 def delete_amenity_with_id(amenity_id):
-    """ deletes the class associated with given id """
+    """deletes the class associated with given id"""
 
     data = storage.get(Amenity, amenity_id)
     if data is None:
