@@ -6,6 +6,7 @@ from models.base_model import BaseModel
 from api.v1.views import app_views
 from models import storage
 from models.place import Place
+from models.user import User
 from models.city import City
 import json
 
@@ -59,6 +60,9 @@ def post_places(city_id):
         abort(400, description="Not a JSON")
     data = request.get_json()
     data["city_id"] = city_id
+
+    if storage.get(User, data["user_id"]) is None:
+        abort(404)
 
     cities = storage.all(City)
     if "City." + city_id not in cities:
