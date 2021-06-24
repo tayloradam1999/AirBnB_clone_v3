@@ -60,3 +60,25 @@ def post():
     storage.new(obj)
     storage.save()
     return obj.to_dict(), 201
+
+
+@app_views.route("/states/<state_id>", methods=['PUT', 'GET'],
+                 strict_slashes=False)
+def put(state_id):
+    """ updates class with information """
+
+    data = storage.get(State, state_id)
+
+    if not data:
+        abort(404)
+    if not request.is_json:
+        abort(400, description="Not a JSON")
+
+    my_req = request.get_json()
+    
+    for k, v in my_req.items():
+        if k != "id" and k != "created_at" and k != "updated_at":
+            setattr(data, k, v)
+
+    storage.save()
+    return data.to_dict(), 200
