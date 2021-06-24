@@ -61,11 +61,11 @@ def post_places(city_id):
     data = request.get_json()
     data["city_id"] = city_id
 
-    if storage.get(User, data["user_id"]) is None:
-        abort(404)
-
     cities = storage.all(City)
     if "City." + city_id not in cities:
+        abort(404)
+
+    if "user_id" not in data.keys():
         abort(404)
 
     if "name" not in data:
