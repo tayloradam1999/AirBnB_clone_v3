@@ -8,6 +8,7 @@ from models import storage
 from models.state import State
 import json
 
+
 @app_views.route("/states/<string:state_id>", methods=['GET'],
                  strict_slashes=False)
 def show_with_id(state_id):
@@ -17,7 +18,7 @@ def show_with_id(state_id):
     if data is None:
         abort(404)
     return jsonify(data.to_dict())
-        
+
 
 @app_views.route("/states", methods=['GET'], strict_slashes=False)
 def show_all():
@@ -43,3 +44,19 @@ def delete_with_id(state_id):
     return jsonify({}), 200
 
 
+@app_views.route("/states", methods=['POST'],
+                 strict_slashes=False)
+def post():
+    """ creates something new with parameters """
+
+    if not request.is_json:
+        abort(400, description="Not a JSON")
+    data = request.get_json()
+
+    if "name" not in data:
+        abort(404, description="Missing name")
+
+    obj = State(**data)
+    storage.new(obj)
+    storage.save()
+    return obj.to_dict(), 201
