@@ -75,7 +75,7 @@ def put(state_id):
         abort(400, description="Not a JSON")
 
     my_req = request.get_json()
-    
+
     for k, v in my_req.items():
         if k != "id" and k != "created_at" and k != "updated_at":
             setattr(data, k, v)
