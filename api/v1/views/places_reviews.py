@@ -75,7 +75,7 @@ def post_reviews(place_id):
     if storage.get(User, data["user_id"]) is None:
         abort(404)
 
-    obj = Place(**data)
+    obj = Review(**data)
     storage.new(obj)
     storage.save()
     return obj.to_dict(), 201
