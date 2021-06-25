@@ -7,7 +7,7 @@ from api.v1.views import app_views
 from models import storage
 from models.place import Place
 from models.user import User
-from models.city import Review
+from models.review import Review
 import json
 
 
