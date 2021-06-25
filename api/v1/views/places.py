@@ -59,18 +59,21 @@ def post_places(city_id):
     if not request.is_json:
         abort(400, description="Not a JSON")
     data = request.get_json()
-    data["city_id"] = city_id
 
-    cities = storage.all(City)
-    if ("City." + city_id not in cities or
-            storage.get(User, data["user_id"]) is None):
-        abort(404)
+    if "user_id" not in data:
+        abort(400, description="Missing user_id")
 
     if "name" not in data:
         abort(400, description="Missing name")
 
-    if "user_id" not in data:
-        abort(400, description="Missing user_id")
+    data["city_id"] = city_id
+
+    cities = storage.all(City)
+    if "City." + city_id not in cities:
+        abort(404)
+
+    if storage.get(User, data["user_id"]) is None:
+        abort(404)
 
     obj = Place(**data)
     storage.new(obj)
