@@ -127,8 +127,8 @@ class TestFileStorage(unittest.TestCase):
     @unittest.skipIf(models.storage_t == 'db', "not testing file storage")
     def test_get(self):
         """Test get method"""
-        with patch('sys.stdout', new=StringIO()) as Jarrison:
-            HBNBCommand().onecmd("create State name='Wesley!'")
-            stateId = Jarrison.getvalue()[:-2]
-        obj = FileStorage().get(State, stateId)
-        self.assertIsInstance(obj, State)
+        stateId = State(name="Cali")
+        stateId.save()
+        models.storage.reload()
+        self.assertEquals((models.storage.get(State, stateId.id)).id,
+                          stateId.id)
